@@ -17,7 +17,7 @@ schema:
       version:
         type: string
         required: true
-        pattern: "^ঐ \\d+\\.\\d+$"
+        pattern: "^ঐ [০-৯]+\\.[০-৯]+$"
         description: "ঐ-versioning string"
       status:
         type: string
@@ -71,7 +71,7 @@ schema:
       version:
         type: string
         required: true
-        pattern: "^ঐ \\d+\\.\\d+$"
+        pattern: "^ঐ [০-৯]+\\.[০-৯]+$"
       type:
         type: string
         required: true

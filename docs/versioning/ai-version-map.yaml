@@ -7,7 +7,7 @@ schema:
       version:
         type: string
         required: true
-        pattern: "^ঐ \\d+\\.\\d+$"
+        pattern: "^ঐ [০-৯]+\\.[০-৯]+$"
       date:
         type: string
         required: true

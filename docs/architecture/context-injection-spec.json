@@ -22,7 +22,7 @@
       "version": {
         "type": "string",
         "required": true,
-        "pattern": "^ঐ \\d+\\.\\d+$",
+        "pattern": "^ঐ [০-৯]+\\.[০-৯]+$",
         "description": "ঐ-ভার্সনিং string"
       },
       "active_file": {
