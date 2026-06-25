@@ -1,0 +1,78 @@
+schema:
+  title: "context-injection-spec"
+  description: "M99 প্রকল্পের এআই সেশনে প্রেক্ষাপট ইনজেকশনের কাঠামো"
+  version: "ঐ ০.০১"
+  fields:
+    repo:
+      type: string
+      required: true
+      description: "GitHub repository path"
+    branch:
+      type: string
+      required: true
+      description: "Active git branch name"
+    project:
+      type: string
+      required: true
+      description: "Project identifier"
+    version:
+      type: string
+      required: true
+      pattern: "^ঐ \\d+\\.\\d+$"
+      description: "ঐ-ভার্সনিং string"
+    active_file:
+      type: string
+      required: false
+      description: "Primary handoff or spec file path"
+    current_task:
+      type: string
+      required: false
+      description: "Short description of ongoing task"
+    companions:
+      type: array
+      required: false
+      items:
+        name:
+          type: string
+        role:
+          type: string
+    rules:
+      type: array
+      required: false
+      items:
+        type: string
+
+sample_instance:
+  repo: "xahmadrafi-dotcom/-"
+  branch: "main"
+  project: "M99"
+  version: "ঐ ০.০২"
+  active_file: "_HANDOFF_TEMP.md"
+  current_task: "docs restructure and ai-versioning"
+  companions:
+    - name: "Copilot"
+      role: "language, structure, schema"
+    - name: "ChatGPT"
+      role: "analysis, centers, philosophy"
+    - name: "Replit"
+      role: "testing, scripting"
+    - name: "Vercel"
+      role: "publishing, interface"
+  rules:
+    - "Bengali outside code blocks"
+    - "English keys inside code blocks"
+    - "plan before action"
+    - "confirm before commit"
+
+validation_hints:
+  - field: "version"
+    rule: "must match pattern ঐ X.XX where X is digit"
+    example: "ঐ ০.০১"
+  - field: "repo"
+    rule: "must be valid GitHub owner/repo format"
+    example: "xahmadrafi-dotcom/-"
+  - field: "branch"
+    rule: "must be existing branch in repo"
+    example: "main"
+  - field: "companions"
+    rule: "each item must have both name and role fields"

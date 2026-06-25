@@ -1,0 +1,90 @@
+schema:
+  title: "ai-version-map"
+  description: "M99 প্রকল্পের ঐ-ভার্সনিং মানচিত্র ও ইতিহাস"
+  version: "ঐ ০.০১"
+  fields:
+    version_entry:
+      version:
+        type: string
+        required: true
+        pattern: "^ঐ \\d+\\.\\d+$"
+      date:
+        type: string
+        required: true
+        format: "YYYY-MM-DD"
+      type:
+        type: string
+        required: true
+        allowed_values:
+          - "যোগ"
+          - "সংশোধন"
+          - "পুনর্গঠন"
+          - "যোগ + সংশোধন"
+      title_bn:
+        type: string
+        required: true
+      title_en:
+        type: string
+        required: false
+      items:
+        type: array
+        required: true
+        items:
+          type: string
+      status_after:
+        type: string
+        required: false
+        allowed_values: ["Draft", "Review", "Final"]
+
+sample_instance:
+  project: "M99"
+  version_history:
+    - version: "ঐ ০.০১"
+      date: "2026-06-21"
+      type: "যোগ"
+      title_bn: "TONTRA জন্ম — প্রথম হ্যান্ডঅফ কাঠামো"
+      title_en: "TONTRA Born — First Handoff Structure"
+      status_after: "Draft"
+      items:
+        - "TANTRA → TONTRA নামকরণ"
+        - "TONTRA মন্ত্র ব্লক যোগ"
+        - "TONTRA workflow যোগ"
+        - "চার সহচর কাঠামো"
+        - "unicode seed map"
+    - version: "ঐ ০.০২"
+      date: "2026-06-24"
+      type: "পুনর্গঠন"
+      title_bn: "নথি পুনর্গঠন ও ঐ-ভার্সনিং বাস্তবায়ন"
+      title_en: "Docs restructure and ai-versioning"
+      status_after: "Draft"
+      items:
+        - "docs/ ফোল্ডার কাঠামো তৈরি"
+        - "context-injection-spec md/yaml/json তৈরি"
+        - "metadata-system-guide md/yaml/json তৈরি"
+        - "ai-versioning-policy md/yaml/json তৈরি"
+        - "docs/index.md তৈরি"
+        - "_HANDOFF_TEMP.md front matter আপডেট"
+
+  versioning_rules:
+    prefix: "ঐ"
+    format: "ঐ X.XX"
+    digit_script: "Bengali"
+    invalid_prefixes:
+      - "oi"
+      - "অই"
+      - "v"
+      - "V"
+    major_version_trigger: "চূড়ান্ত প্রকাশ বা সম্পূর্ণ পুনর্লিখন"
+    minor_version_trigger: "যেকোনো যোগ, সংশোধন বা পুনর্গঠন"
+
+validation_hints:
+  - field: "version"
+    rule: "must start with Bengali character ঐ followed by space and Bengali digits"
+    example: "ঐ ০.০১"
+    invalid: "oi 0.01, v0.01, ঐ0.01"
+  - field: "date"
+    rule: "ISO 8601 YYYY-MM-DD format"
+  - field: "items"
+    rule: "at least one item required per version entry"
+  - field: "type"
+    rule: "must be one of: যোগ, সংশোধন, পুনর্গঠন, যোগ + সংশোধন"
