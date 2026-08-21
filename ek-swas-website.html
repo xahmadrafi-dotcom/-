@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>এক শ্বাস · অনেক নাম · এক সত্য</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@300;400;600;700&family=Noto+Serif+Devanagari:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@300;400;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #030201;
+  --deep: #0a0604;
+  --smoke: #140e08;
+  --gold: #c9a44a;
+  --amber: #e8b96a;
+  --gold-dim: rgba(201,164,74,0.25);
+  --gold-faint: rgba(201,164,74,0.08);
+  --cream: #f0e4cc;
+  --dust: rgba(201,164,74,0.55);
+  --line: rgba(201,164,74,0.12);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--void);
+  color: var(--cream);
+  font-family: 'Noto Serif Bengali', serif;
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════ */
+#cursor {
+  position: fixed; width:12px; height:12px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none; z-index:9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s, height .2s, background .2s;
+  mix-blend-mode: screen;
+}
+#cursor-trail {
+  position: fixed; width:4px; height:4px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none; z-index:9998;
+  transform: translate(-50%,-50%);
+  opacity: 0.5;
+  transition: left .08s ease, top .08s ease;
+}
+body:hover #cursor { background: rgba(201,164,74,0.1); }
+
+/* ══════════════════════════════════════
+   GRAIN OVERLAY
+══════════════════════════════════════ */
+#grain {
+  position: fixed; inset:0; z-index:1000;
+  pointer-events:none; opacity:0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grainAnim 8s steps(1) infinite;
+}
+@keyframes grainAnim {
+  0%,100%{background-position:0 0} 20%{background-position:100px -50px}
+  40%{background-position:-80px 120px} 60%{background-position:60px 80px}
+  80%{background-position:-120px -30px}
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  padding: 20px 48px;
+  display: flex; align-items:center; justify-content:space-between;
+  background: linear-gradient(to bottom, rgba(3,2,1,0.9), transparent);
+  backdrop-filter: blur(2px);
+}
+.nav-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  color: var(--dust);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-family: 'Noto Serif Bengali', serif;
+  font-size: 12px;
+  color: rgba(201,164,74,0.4);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  transition: color 0.4s ease;
+  position: relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0;
+  height:1px; background:var(--gold);
+  transform: scaleX(0); transition: transform 0.4s ease;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* ══════════════════════════════════════
+   SECTION BASE
+══════════════════════════════════════ */
+section {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.section-inner {
+  position: relative; z-index:10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 48px;
+  width: 100%;
+}
+
+.section-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.6em;
+  color: rgba(201,164,74,0.35);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.section-heading {
+  font-family: 'Noto Serif Bengali', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 300;
+  color: var(--amber);
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+
+.section-subheading {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(14px, 1.8vw, 20px);
+  color: var(--dust);
+  margin-bottom: 60px;
+  letter-spacing: 0.05em;
+}
+
+.gold-divider {
+  width: 80px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin: 40px 0;
+}
+
+/* ══════════════════════════════════════
+   ① HERO SECTION
+══════════════════════════════════════ */
+#hero {
+  height: 100vh; min-height:100vh;
+  background: radial-gradient(ellipse at 50% 60%, #1c0f04 0%, #0a0604 45%, #030201 100%);
+  position: relative;
+}
+
+#hero-canvas { position:absolute; inset:0; z-index:2; pointer-events:none; }
+
+#breath-bg {
+  position:absolute; inset:0; z-index:1;
+  background: radial-gradient(ellipse at 50% 50%, rgba(201,164,74,0.07), transparent 65%);
+  animation: heroBreath 9s ease-in-out infinite;
+}
+@keyframes heroBreath {
+  0%,100%{opacity:.4;transform:scale(.95)} 50%{opacity:1;transform:scale(1.05)}
+}
+
+/* Orbiting rings */
+.orbit-ring {
+  position: absolute; top:50%; left:50%;
+  transform-origin: center;
+  pointer-events: none; z-index:3;
+}
+.orbit-ring svg { display:block; }
+.ring-1 { animation: orbitCW 100s linear infinite; }
+.ring-2 { animation: orbitCCW 70s linear infinite; }
+.ring-3 { animation: orbitCW 45s linear infinite; }
+@keyframes orbitCW  { to { transform: rotate(360deg); } }
+@keyframes orbitCCW { to { transform: rotate(-360deg); } }
+
+#hero-center {
+  position: absolute; top:50%; left:50%;
+  transform: translate(-50%,-52%);
+  text-align: center; z-index:10;
+  pointer-events: none;
+}
+#om-symbol {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: clamp(80px, 14vw, 160px);
+  color: var(--amber);
+  display:block; line-height:1;
+  text-shadow: 0 0 60px rgba(232,185,106,.9), 0 0 120px rgba(201,164,74,.4), 0 0 240px rgba(201,164,74,.15);
+  animation: omPulse 9s ease-in-out infinite;
+}
+@keyframes omPulse {
+  0%,100%{opacity:.8;transform:scale(.97);text-shadow:0 0 40px rgba(232,185,106,.6),0 0 80px rgba(201,164,74,.3)}
+  50%{opacity:1;transform:scale(1.03);text-shadow:0 0 80px rgba(232,185,106,1),0 0 160px rgba(201,164,74,.7),0 0 300px rgba(201,164,74,.2)}
+}
+#hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(13px, 1.8vw, 18px);
+  color: rgba(201,164,74,.5);
+  letter-spacing: .35em;
+  margin-top: 16px;
+  animation: tagFade 9s ease-in-out infinite;
+}
+@keyframes tagFade {
+  0%,100%{opacity:.4;transform:translateY(2px)} 50%{opacity:.9;transform:translateY(-2px)}
+}
+#hero-subtitle {
+  font-family: 'Noto Serif Bengali', serif;
+  font-size: clamp(14px, 2vw, 20px);
+  font-weight:300;
+  color: rgba(201,164,74,0.35);
+  margin-top: 10px;
+  letter-spacing: .1em;
+}
+
+#hero-scroll-hint {
+  position: absolute; bottom:40px; left:50%;
+  transform: translateX(-50%);
+  z-index:10; text-align:center;
+  animation: scrollHint 2s ease-in-out infinite;
+}
+@keyframes scrollHint {
+  0%,100%{opacity:.3;transform:translateX(-50%) translateY(0)}
+  50%{opacity:.7;transform:translateX(-50%) translateY(6px)}
+}
+#hero-scroll-hint span {
+  font-family:'Cinzel',serif;
+  font-size:8px; letter-spacing:.5em;
+  color:rgba(201,164,74,.4);
+  display:block; margin-top:8px;
+  text-transform:uppercase;
+}
+.scroll-arrow {
+  width:1px; height:40px;
+  background: linear-gradient(to bottom, rgba(201,164,74,0), rgba(201,164,74,.5));
+  margin: 0 auto;
+}
+
+/* ══════════════════════════════════════
+   ② THREE TRADITIONS
+══════════════════════════════════════ */
+#traditions {
+  background: linear-gradient(to bottom, #030201 0%, #07040200 30%, #07040200 70%, #030201 100%),
+              radial-gradient(ellipse at 30% 50%, rgba(201,164,74,0.03), transparent 60%);
+}
+#traditions .section-inner { padding-top: 100px; padding-bottom: 100px; }
+
+.traditions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 60px;
+}
+.tradition-card {
+  padding: 48px 36px;
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.5s ease;
+  background: rgba(201,164,74,0.015);
+}
+.tradition-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  transform: scaleX(0); transition: transform 0.6s ease;
+}
+.tradition-card:hover { border-color: rgba(201,164,74,0.25); }
+.tradition-card:hover::before { transform: scaleX(1); }
+
+.trad-script {
+  font-family: 'Noto Serif Devanagari', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--gold);
+  opacity: 0.7;
+  display:block;
+  margin-bottom: 20px;
+  line-height:1;
+  transition: opacity .4s;
+}
+.trad-script.ar { font-family: 'Cormorant Garamond', serif; direction:rtl; font-style:italic; }
+.tradition-card:hover .trad-script { opacity: 1; }
+
+.trad-title {
+  font-family: 'Noto Serif Bengali', serif;
+  font-size: 18px; font-weight:600;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+.trad-subtitle {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing:.4em;
+  color: rgba(201,164,74,.35);
+  text-transform:uppercase;
+  margin-bottom: 20px;
+}
+.trad-body {
+  font-family: 'Noto Serif Bengali', serif;
+  font-size: 13px; line-height:2;
+  color: rgba(240,228,204,.55);
+  font-weight:300;
+}
+.trad-mantras {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.trad-mantra-item {
+  display:flex; gap:12px; align-items:baseline;
+  margin-bottom:10px;
+}
+.trad-mantra-script {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:13px; color:var(--gold);
+  min-width:120px;
+}
+.trad-mantra-script.ar { font-family:'Cormorant Garamond',serif; font-style:italic; direction:rtl; }
+.trad-mantra-meaning {
+  font-size:11px; color:rgba(240,228,204,.4);
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+}
+
+/* ══════════════════════════════════════
+   ③ BENGALI TRADITION
+══════════════════════════════════════ */
+#bengali {
+  background: linear-gradient(to bottom, #030201, #0a0503, #030201);
+  position:relative;
+}
+#bengali::before {
+  content:'বাংলা';
+  position:absolute; right:-20px; top:50%;
+  transform:translateY(-50%) rotate(90deg);
+  font-family:'Cinzel',serif; font-size:120px;
+  color:rgba(201,164,74,0.025);
+  letter-spacing:.3em; pointer-events:none;
+  white-space:nowrap;
+}
+
+.bengali-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1px;
+  margin-top: 60px;
+}
+.bengali-card {
+  padding: 48px 40px;
+  border: 1px solid var(--line);
+  background: rgba(201,164,74,0.012);
+  position:relative; overflow:hidden;
+  transition: all 0.5s ease;
+}
+.bengali-card:first-child {
+  grid-column: 1 / -1;
+  display:grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items:center;
+}
+.bengali-card:hover { background: rgba(201,164,74,0.03); border-color: rgba(201,164,74,0.2); }
+
+.bcard-icon {
+  font-family:'Noto Serif Bengali',serif;
+  font-size: clamp(48px, 7vw, 90px);
+  color:var(--gold); opacity:.5;
+  line-height:1; margin-bottom:20px;
+  transition: opacity .4s;
+}
+.bengali-card:hover .bcard-icon { opacity:.9; }
+
+.bcard-title {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:22px; font-weight:600;
+  color:var(--amber); margin-bottom:6px;
+}
+.bcard-eng {
+  font-family:'Cinzel',serif; font-size:9px;
+  letter-spacing:.4em; color:rgba(201,164,74,.3);
+  text-transform:uppercase; margin-bottom:20px;
+}
+.bcard-body {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:13px; line-height:2.1;
+  color:rgba(240,228,204,.5); font-weight:300;
+}
+.bcard-quote {
+  margin-top:24px; padding:20px 24px;
+  border-left:2px solid rgba(201,164,74,.25);
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:15px;
+  color:rgba(201,164,74,.6); line-height:1.8;
+}
+
+.nazrul-highlight {
+  margin-top:30px; padding:28px;
+  background: linear-gradient(135deg, rgba(201,164,74,0.06), rgba(201,164,74,0.02));
+  border:1px solid rgba(201,164,74,.15);
+}
+.nazrul-highlight .big-verse {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(16px,2.5vw,24px);
+  color:var(--amber); line-height:1.8;
+  font-weight:300;
+  text-shadow: 0 0 30px rgba(201,164,74,.3);
+}
+
+/* ══════════════════════════════════════
+   ④ PHILOSOPHY SECTION
+══════════════════════════════════════ */
+#philosophy {
+  background: #030201;
+  position:relative; overflow:hidden;
+}
+#philosophy::before {
+  content:'';
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:600px; height:600px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(201,164,74,0.04), transparent 70%);
+  animation: philoPulse 8s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes philoPulse {
+  0%,100%{transform:translate(-50%,-50%) scale(.9);opacity:.5}
+  50%{transform:translate(-50%,-50%) scale(1.1);opacity:1}
+}
+
+.philo-center { text-align:center; max-width:800px; margin:0 auto; }
+
+.philo-big {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(22px,4vw,48px);
+  color:var(--amber); line-height:1.5;
+  font-weight:300; margin-bottom:40px;
+  text-shadow:0 0 40px rgba(201,164,74,.2);
+}
+
+.philo-names {
+  display:flex; flex-wrap:wrap;
+  justify-content:center; gap:20px 40px;
+  margin:50px 0;
+}
+.philo-name {
+  text-align:center; padding:20px 28px;
+  border:1px solid var(--line);
+  transition: all 0.4s ease;
+  position:relative;
+}
+.philo-name:hover { border-color:rgba(201,164,74,.4); background:rgba(201,164,74,.04); }
+.pname-script {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:clamp(20px,3vw,32px);
+  color:var(--gold); display:block; margin-bottom:8px;
+}
+.pname-script.ar { font-family:'Cormorant Garamond',serif; font-style:italic; direction:rtl; }
+.pname-script.bn { font-family:'Noto Serif Bengali',serif; }
+.pname-lang {
+  font-family:'Cinzel',serif; font-size:8px;
+  letter-spacing:.4em; color:rgba(201,164,74,.3);
+  text-transform:uppercase;
+}
+.pname-meaning {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:12px;
+  color:rgba(240,228,204,.4); margin-top:4px;
+}
+
+.philo-quote-block {
+  margin:50px 0;
+  padding:40px;
+  border:1px solid var(--line);
+  position:relative;
+}
+.philo-quote-block::before {
+  content:'"';
+  position:absolute; top:-20px; left:30px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:80px; color:rgba(201,164,74,.15);
+  line-height:1;
+}
+.philo-quote-text {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(15px,2vw,20px);
+  color:rgba(240,228,204,.65);
+  line-height:2; font-weight:300;
+}
+.philo-quote-attr {
+  font-family:'Cinzel',serif; font-size:9px;
+  letter-spacing:.4em; color:rgba(201,164,74,.35);
+  margin-top:20px; text-transform:uppercase;
+}
+
+/* ══════════════════════════════════════
+   ⑤ MEDITATION GUIDE
+══════════════════════════════════════ */
+#meditation {
+  background: linear-gradient(to bottom, #030201, #08050300 40%, #08050300 60%, #030201);
+}
+
+.meditation-layout {
+  display:grid; grid-template-columns:1fr 2fr;
+  gap: 80px; align-items:start;
+  margin-top:60px;
+}
+.meditation-sidebar { position:sticky; top:120px; }
+.meditation-symbol {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:80px; color:var(--gold); opacity:.6;
+  line-height:1; margin-bottom:20px;
+}
+.breath-timer {
+  margin-top:30px; padding:24px;
+  border:1px solid var(--line);
+  text-align:center;
+}
+.breath-ring {
+  width:80px; height:80px;
+  border:1px solid rgba(201,164,74,.2);
+  border-radius:50%;
+  margin:0 auto 16px;
+  position:relative;
+  animation: breathRing 8s ease-in-out infinite;
+}
+@keyframes breathRing {
+  0%,100%{transform:scale(.85);border-color:rgba(201,164,74,.2)}
+  50%{transform:scale(1.1);border-color:rgba(201,164,74,.6)}
+}
+.breath-ring::after {
+  content:''; position:absolute; inset:8px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(201,164,74,.15), transparent);
+  animation: breathRing 8s ease-in-out infinite reverse;
+}
+.breath-label {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:12px; color:rgba(201,164,74,.5);
+}
+
+.steps-list { list-style:none; }
+.step-item {
+  padding:28px 0; border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:48px 1fr;
+  gap:20px; align-items:start;
+  opacity:0; transform:translateY(20px);
+  transition: all 0.8s ease;
+}
+.step-item.visible { opacity:1; transform:translateY(0); }
+.step-num {
+  font-family:'Cinzel',serif;
+  font-size:11px; letter-spacing:.2em;
+  color:rgba(201,164,74,.3);
+  padding-top:4px;
+}
+.step-title {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:17px; color:var(--amber);
+  margin-bottom:8px; font-weight:600;
+}
+.step-body {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:13px; line-height:2.1;
+  color:rgba(240,228,204,.5); font-weight:300;
+}
+.step-mantra {
+  margin-top:12px; padding:12px 16px;
+  background:rgba(201,164,74,.04);
+  border-left:2px solid rgba(201,164,74,.3);
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:14px; color:var(--gold);
+}
+.step-mantra.ar { font-family:'Cormorant Garamond',serif; font-style:italic; direction:rtl; }
+
+/* ══════════════════════════════════════
+   ⑥ AUDIO / COMPOSITION GUIDE
+══════════════════════════════════════ */
+#audio-guide {
+  background: #030201;
+  position:relative;
+}
+
+.composition-layout {
+  margin-top:60px;
+}
+.comp-stage-tabs {
+  display:flex; gap:0; margin-bottom:40px;
+  border:1px solid var(--line);
+}
+.comp-tab {
+  flex:1; padding:16px 8px;
+  text-align:center;
+  font-family:'Cinzel',serif;
+  font-size:8px; letter-spacing:.3em;
+  color:rgba(201,164,74,.3);
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .4s; border:none;
+  background:transparent;
+  border-right:1px solid var(--line);
+}
+.comp-tab:last-child { border-right:none; }
+.comp-tab:hover, .comp-tab.active {
+  background:rgba(201,164,74,.06);
+  color:var(--gold);
+}
+
+.comp-stage-detail {
+  display:none; padding:40px;
+  border:1px solid var(--line);
+  border-top:none;
+  animation: fadeIn .5s ease;
+}
+.comp-stage-detail.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.comp-layers {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:16px; margin-top:24px;
+}
+.comp-layer {
+  padding:16px 20px;
+  border:1px solid var(--line);
+}
+.layer-name {
+  font-family:'Cinzel',serif; font-size:8px;
+  letter-spacing:.4em; color:rgba(201,164,74,.4);
+  text-transform:uppercase; margin-bottom:8px;
+}
+.layer-bar-bg {
+  height:2px; background:rgba(201,164,74,.08);
+  position:relative; overflow:hidden;
+}
+.layer-bar-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  background:linear-gradient(to right, rgba(201,164,74,.3), var(--gold));
+  transition: width 1s ease;
+}
+.layer-desc {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:11px; color:rgba(240,228,204,.35);
+  margin-top:8px; line-height:1.8;
+}
+
+.comp-stage-name {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:22px; color:var(--amber); margin-bottom:8px;
+}
+.comp-stage-eng {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:14px;
+  color:rgba(201,164,74,.4); margin-bottom:20px;
+}
+.comp-stage-desc {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:13px; line-height:2;
+  color:rgba(240,228,204,.5); font-weight:300;
+}
+
+/* ══════════════════════════════════════
+   ⑦ VISUAL GALLERY
+══════════════════════════════════════ */
+#gallery {
+  background: linear-gradient(to bottom, #030201, #05030100, #030201);
+}
+
+.gallery-grid {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: auto auto;
+  gap:2px; margin-top:60px;
+}
+.gallery-cell {
+  aspect-ratio:1;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--line);
+  position:relative; overflow:hidden;
+  cursor:pointer;
+  background:var(--deep);
+  transition: border-color 0.4s ease;
+}
+.gallery-cell:first-child { grid-column:span 2; aspect-ratio:2/1; }
+.gallery-cell:hover { border-color:rgba(201,164,74,.3); }
+
+.gallery-art {
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column;
+  transition: transform 0.6s ease;
+}
+.gallery-cell:hover .gallery-art { transform:scale(1.04); }
+
+.gallery-overlay {
+  position:absolute; inset:0;
+  background:rgba(3,2,1,.5);
+  display:flex; align-items:flex-end;
+  padding:20px;
+  opacity:0; transition:opacity .4s;
+}
+.gallery-cell:hover .gallery-overlay { opacity:1; }
+.gallery-label {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:13px; color:rgba(240,228,204,.7);
+}
+.gallery-label span {
+  font-family:'Cinzel',serif; font-size:8px;
+  letter-spacing:.3em; color:rgba(201,164,74,.5);
+  display:block; text-transform:uppercase;
+}
+
+/* SVG art pieces */
+.mandala-svg { width:80%; max-width:300px; opacity:.55; transition:opacity .4s; }
+.gallery-cell:hover .mandala-svg { opacity:.85; }
+
+/* ══════════════════════════════════════
+   ⑧ LATIN TRADITION
+══════════════════════════════════════ */
+#latin-tradition {
+  background: linear-gradient(to bottom, #030201, #070403, #030201);
+}
+
+.latin-layout {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:center; margin-top:60px;
+}
+.latin-left .big-latin {
+  font-family:'Cinzel',serif;
+  font-size:clamp(32px,6vw,80px);
+  color:rgba(201,164,74,.15);
+  line-height:1.2; font-weight:300;
+  margin-bottom:24px;
+}
+.latin-phrases { margin-top:30px; }
+.latin-phrase {
+  padding:16px 0; border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.lp-text {
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px; font-style:italic;
+  color:var(--gold); font-weight:300;
+}
+.lp-meaning {
+  font-family:'Noto Serif Bengali',serif;
+  font-size:12px; color:rgba(240,228,204,.4);
+  align-self:center;
+}
+
+.latin-right-quote {
+  padding:40px; border:1px solid var(--line);
+  position:relative;
+}
+.latin-right-quote::before {
+  content:'†';
+  position:absolute; top:-16px; left:50%;
+  transform:translateX(-50%);
+  font-family:'Cinzel',serif; font-size:20px;
+  color:rgba(201,164,74,.3);
+  background:var(--void); padding:0 12px;
+}
+.lrq-text {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:clamp(14px,2vw,20px);
+  color:rgba(240,228,204,.6); line-height:1.8;
+  text-align:center;
+}
+.lrq-source {
+  font-family:'Cinzel',serif; font-size:9px;
+  letter-spacing:.4em; color:rgba(201,164,74,.3);
+  text-align:center; margin-top:20px;
+  text-transform:uppercase;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  padding:60px 48px;
+  border-top:1px solid var(--line);
+  text-align:center;
+  position:relative;
+}
+.footer-om {
+  font-family:'Noto Serif Devanagari',serif;
+  font-size:32px; color:rgba(201,164,74,.25);
+  margin-bottom:20px;
+}
+.footer-text {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic; font-size:14px;
+  color:rgba(201,164,74,.2);
+  letter-spacing:.2em;
+}
+.footer-scripts {
+  margin-top:16px;
+  font-family:'Noto Serif Bengali',serif;
+  font-size:11px; color:rgba(201,164,74,.12);
+  letter-spacing:.2em;
+}
+
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+.reveal {
+  opacity:0; transform:translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.15s; }
+.reveal-delay-2 { transition-delay:.3s; }
+.reveal-delay-3 { transition-delay:.45s; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:900px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  .section-inner { padding:80px 24px; }
+  .traditions-grid, .bengali-grid, .latin-layout { grid-template-columns:1fr; }
+  .bengali-card:first-child { grid-template-columns:1fr; }
+  .meditation-layout { grid-template-columns:1fr; }
+  .meditation-sidebar { position:static; }
+  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .gallery-cell:first-child { grid-column:span 2; }
+  .comp-stage-tabs { flex-wrap:wrap; }
+}
+</style>
+</head>
+<body>
+
+<div id="grain"></div>
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
+
+<!-- ══ NAV ══════════════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-brand">এক শ্বাস · Ek Swas</a>
+  <ul class="nav-links">
+    <li><a href="#traditions">তিন ঐতিহ্য</a></li>
+    <li><a href="#bengali">বাংলা</a></li>
+    <li><a href="#philosophy">দর্শন</a></li>
+    <li><a href="#meditation">ধ্যান</a></li>
+    <li><a href="#audio-guide">সুর</a></li>
+    <li><a href="#gallery">শিল্প</a></li>
+    <li><a href="#latin-tradition">লাতিন</a></li>
+  </ul>
+</nav>
+
+<!-- ══ ① HERO ═══════════════════════════ -->
+<section id="hero">
+  <div id="breath-bg"></div>
+  <canvas id="hero-canvas"></canvas>
+
+  <!-- Ring 1 outer -->
+  <div class="orbit-ring ring-1" style="margin-left:-320px;margin-top:-320px;">
+    <svg width="640" height="640" viewBox="0 0 640 640">
+      <defs><path id="r1" d="M320,320 m-300,0 a300,300 0 1,1 600,0 a300,300 0 1,1 -600,0"/></defs>
+      <text font-family="'Noto Serif Devanagari',serif" font-size="14" fill="rgba(201,164,74,0.18)" letter-spacing="16">
+        <textPath href="#r1">ॐ शान्तिः शान्तिः शान्तिः • لوكाः समस्ताः सुखिनो भवन्तु • ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྃ • السلام السلام • এক শ্বাস এক তীর •</textPath>
+      </text>
+    </svg>
+  </div>
+  <!-- Ring 2 mid -->
+  <div class="orbit-ring ring-2" style="margin-left:-210px;margin-top:-210px;">
+    <svg width="420" height="420" viewBox="0 0 420 420">
+      <defs><path id="r2" d="M210,210 m-190,0 a190,190 0 1,1 380,0 a190,190 0 1,1 -380,0"/></defs>
+      <text font-family="'Cormorant Garamond',serif" font-style="italic" font-size="13" fill="rgba(201,164,74,0.22)" letter-spacing="18">
+        <textPath href="#r2">السكينة • النور • الكريم • يا قلبي • sabr • prem • kareem • noor •</textPath>
+      </text>
+    </svg>
+  </div>
+  <!-- Ring 3 inner -->
+  <div class="orbit-ring ring-3" style="margin-left:-130px;margin-top:-130px;">
+    <svg width="260" height="260" viewBox="0 0 260 260">
+      <defs><path id="r3" d="M130,130 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0"/></defs>
+      <text font-family="'Noto Serif Devanagari',serif" font-size="16" fill="rgba(201,164,74,0.32)" letter-spacing="20">
+        <textPath href="#r3">ॐ • ཨོཾ • الله • ॐ • ཨོཾ • الله •</textPath>
+      </text>
+    </svg>
+  </div>
+
+  <div id="hero-center">
+    <span id="om-symbol">ॐ</span>
+    <div id="hero-tagline">one breath · one shore · many names</div>
+    <div id="hero-subtitle">এক শ্বাস · অনেক নাম · এক সত্য</div>
+  </div>
+
+  <div id="hero-scroll-hint">
+    <div class="scroll-arrow"></div>
+    <span>নিচে যাও</span>
+  </div>
+</section>
+
+<!-- ══ ② THREE TRADITIONS ════════════════ -->
+<section id="traditions">
+  <div class="section-inner">
+    <span class="section-tag reveal">তিনটি পবিত্র ঐতিহ্য</span>
+    <h2 class="section-heading reveal reveal-delay-1">তিন পথ · এক গন্তব্য</h2>
+    <p class="section-subheading reveal reveal-delay-2">Sanskrit · Tibetan · Arabic — তিনটি ভিন্ন ভাষা, তিনটি ভিন্ন ঐতিহ্য — কিন্তু একই সুরের তান</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="traditions-grid">
+      <!-- Sanskrit -->
+      <div class="tradition-card reveal">
+        <span class="trad-script">ॐ</span>
+        <div class="trad-title">সংস্কৃত · বৈদিক ঐতিহ্য</div>
+        <div class="trad-subtitle">Sanskrit · Vedic Tradition</div>
+        <div class="trad-body">
+          ভারতীয় উপমহাদেশের প্রাচীনতম আধ্যাত্মিক ভাষা। সংস্কৃত মন্ত্রগুলি হাজার হাজার বছর ধরে মানুষের চেতনাকে জাগ্রত করে আসছে। ওঙ্কার — সেই আদি শব্দ, যেখান থেকে সমস্ত সৃষ্টির উৎপত্তি।
+        </div>
+        <div class="trad-mantras">
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script">ॐ शान्तिः</span>
+            <span class="trad-mantra-meaning">ওঁ শান্তি — আদিম শান্তি</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script">लोकाः समस्ताः</span>
+            <span class="trad-mantra-meaning">সকল জগৎ সুখী হোক</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script">सुखिनो भवन्तु</span>
+            <span class="trad-mantra-meaning">ভবন্তু — হোক, হোক, হোক</span>
+          </div>
+        </div>
+      </div>
+      <!-- Tibetan -->
+      <div class="tradition-card reveal reveal-delay-1">
+        <span class="trad-script" style="font-family:'Noto Serif Bengali',serif;font-size:36px;">ཨོཾ་མ་ཎི</span>
+        <div class="trad-title">তিব্বতি · বৌদ্ধ ঐতিহ্য</div>
+        <div class="trad-subtitle">Tibetan · Buddhist Tradition</div>
+        <div class="trad-body">
+          হিমালয়ের উচ্চতায় জন্ম নেওয়া এই ঐতিহ্য সার্বজনীন করুণার কথা বলে। তিব্বতি ভিক্ষুদের গভীর কণ্ঠের কম্পন — অনেক কণ্ঠে একই মন্ত্রের অনুরণন — আত্মা ও আকাশের সেতু।
+        </div>
+        <div class="trad-mantras">
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script" style="font-size:12px;">ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྃ</span>
+            <span class="trad-mantra-meaning">পদ্মের মণি</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script">ཧཱུྃ</span>
+            <span class="trad-mantra-meaning">হৃদয়ের বীজমন্ত্র</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script">མ་ཎི</span>
+            <span class="trad-mantra-meaning">মণি — মূল্যবান রত্ন</span>
+          </div>
+        </div>
+      </div>
+      <!-- Arabic Sufi -->
+      <div class="tradition-card reveal reveal-delay-2">
+        <span class="trad-script ar">السلام</span>
+        <div class="trad-title">আরবি · সুফি ঐতিহ্য</div>
+        <div class="trad-subtitle">Arabic · Sufi Tradition</div>
+        <div class="trad-body">
+          ইসলামের আধ্যাত্মিক ধারা — সুফিবাদ — প্রেম, আলো ও শান্তির পথে ঈশ্বরের সন্ধান করে। জিকির হলো সেই অনুশীলন যেখানে ঐশ্বরিক নামের পুনরাবৃত্তিতে হৃদয় জেগে ওঠে।
+        </div>
+        <div class="trad-mantras">
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script ar" style="direction:rtl;">السلام السلام</span>
+            <span class="trad-mantra-meaning">আস-সালাম — শান্তি শান্তি</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script ar" style="direction:rtl;">النور</span>
+            <span class="trad-mantra-meaning">আন-নূর — আলো</span>
+          </div>
+          <div class="trad-mantra-item">
+            <span class="trad-mantra-script ar" style="direction:rtl;">يا قلبي</span>
+            <span class="trad-mantra-meaning">ইয়া কালবি — হে আমার হৃদয়</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ③ BENGALI TRADITION ════════════════ -->
+<section id="bengali">
+  <div class="section-inner">
+    <span class="section-tag reveal">আমাদের নিজস্ব ঐতিহ্য</span>
+    <h2 class="section-heading reveal reveal-delay-1">বাংলার আত্মা</h2>
+    <p class="section-subheading reveal reveal-delay-2">বাউল · রবীন্দ্রনাথ · নজরুল · ভক্তিসংগীত</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="bengali-grid">
+      <!-- Rabindranath - full width -->
+      <div class="bengali-card reveal">
+        <div>
+          <div class="bcard-icon">র</div>
+          <div class="bcard-title">রবীন্দ্রনাথ ঠাকুর</div>
+          <div class="bcard-eng">Rabindranath Tagore · 1861–1941</div>
+          <div class="bcard-body">
+            বিশ্বকবি — যিনি বাংলার আধ্যাত্মিকতাকে সংগীতে রূপ দিয়েছেন। তাঁর রচনায় বৈদিক জ্ঞান, সুফি প্রেম এবং বাউলের উদাসীনতা একসুরে বাঁধা। গীতাঞ্জলিতে তিনি লিখেছিলেন আত্মার সেই গভীরতম কথা।
+          </div>
+        </div>
+        <div>
+          <div class="nazrul-highlight">
+            <div class="big-verse">
+              আমার মাথা নত করে দাও হে তোমার<br>
+              চরণ-ধূলার তলে।<br>
+              সকল অহংকার হে আমার<br>
+              ডুবাও চোখের জলে।
+            </div>
+          </div>
+          <div class="bcard-quote">
+            "Where the mind is without fear and the head is held high... into that heaven of freedom, my Father, let my country awake."
+            <br><br><span style="font-size:11px;color:rgba(201,164,74,.3);font-style:normal;letter-spacing:.2em;">— GITANJALI</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Baul -->
+      <div class="bengali-card reveal">
+        <div class="bcard-icon">বাউল</div>
+        <div class="bcard-title">বাউল সংগীত</div>
+        <div class="bcard-eng">Baul · The Mad Mystics</div>
+        <div class="bcard-body">
+          বাংলার মাটির সন্তান বাউলেরা। তারা না হিন্দু, না মুসলমান — তারা শুধু মানুষের সন্ধান করেন। একতারার সুরে, ধূলো-মাখা পথে তারা গেয়ে চলেন সেই অধরা মানুষের গান।
+        </div>
+        <div class="bcard-quote">
+          "আমার সোনার বাংলা" নয়, বরং<br>
+          <strong style="color:var(--amber);">"মানুষ ভজো মানুষ ধরো"</strong><br>
+          — এই-ই বাউলের আধ্যাত্মিকতা
+        </div>
+      </div>
+
+      <!-- Nazrul -->
+      <div class="bengali-card reveal reveal-delay-1">
+        <div class="bcard-icon">নজ</div>
+        <div class="bcard-title">কাজী নজরুল ইসলাম</div>
+        <div class="bcard-eng">Kazi Nazrul Islam · বিদ্রোহী কবি</div>
+        <div class="bcard-body">
+          বিদ্রোহী কবি নজরুল — যিনি হিন্দু-মুসলিম ঐতিহ্যকে একটি সুরে বেঁধেছিলেন। শ্যামাসংগীত থেকে ইসলামি গজল — সব এক কলমে। তাঁর ভক্তিমূলক কবিতায় সকল ধর্মের সুর একাকার।
+        </div>
+        <div class="bcard-quote">
+          <strong style="color:var(--amber);">"মোরা একই বৃন্তে দুটি কুসুম<br>হিন্দু-মুসলমান।"</strong>
+          <br><br><span style="font-size:11px;color:rgba(201,164,74,.3);font-style:normal;letter-spacing:.2em;">— কাজী নজরুল ইসলাম</span>
+        </div>
+      </div>
+
+      <!-- Bhakti -->
+      <div class="bengali-card reveal reveal-delay-2" style="grid-column:1/-1;">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;align-items:start;">
+          <div>
+            <div class="bcard-icon" style="font-size:40px;">ভক্তি</div>
+            <div class="bcard-title">ভক্তিসংগীত</div>
+            <div class="bcard-eng">Bhakti Sangeet</div>
+            <div class="bcard-body">প্রেম ও আত্মসমর্পণের গান। ঈশ্বরের প্রতি অকৃত্রিম ভালোবাসাই এর মূল সুর।</div>
+          </div>
+          <div>
+            <div style="padding:24px;border:1px solid var(--line);">
+              <div style="font-family:'Noto Serif Bengali',serif;font-size:14px;color:var(--gold);margin-bottom:12px;">ভালো ভাবো · ভালো বাসো</div>
+              <div style="font-family:'Noto Serif Bengali',serif;font-size:12px;color:rgba(240,228,204,.4);line-height:2;">ভালো ভাবা মানে ঈশ্বরের দিকে মন ফেরানো। ভালো বাসা মানে সেই ভালোবাসাকে সবার মধ্যে ছড়িয়ে দেওয়া।</div>
+            </div>
+          </div>
+          <div>
+            <div style="padding:24px;border:1px solid var(--line);">
+              <div style="font-family:'Noto Serif Bengali',serif;font-size:14px;color:var(--gold);margin-bottom:12px;">sabr · পেম · নূর</div>
+              <div style="font-family:'Noto Serif Bengali',serif;font-size:12px;color:rgba(240,228,204,.4);line-height:2;">সবর — ধৈর্য। পেম — প্রেম। নূর — আলো। তিনটি শব্দ, তিনটি পথ, একটি গন্তব্য।</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ④ PHILOSOPHY ══════════════════════ -->
+<section id="philosophy">
+  <div class="section-inner">
+    <div class="philo-center">
+      <span class="section-tag reveal">আধ্যাত্মিক দর্শন</span>
+      <h2 class="section-heading reveal reveal-delay-1">অনেক নাম · এক সত্য</h2>
+      <p class="section-subheading reveal reveal-delay-2">Many Names · One Truth · Aneka Naama · Ek Satya</p>
+      <div class="gold-divider reveal reveal-delay-2" style="margin:30px auto;"></div>
+
+      <div class="philo-big reveal">
+        পৃথিবীর সব প্রান্তে মানুষ সেই একই আলোকে<br>
+        ভিন্ন ভিন্ন নামে ডেকেছে।<br>
+        ভাষা আলাদা, পথ আলাদা —<br>
+        কিন্তু হৃদয়ের কান্না একই।
+      </div>
+
+      <div class="philo-names reveal">
+        <div class="philo-name">
+          <span class="pname-script">ॐ</span>
+          <div class="pname-lang">Sanskrit</div>
+          <div class="pname-meaning">আদিম শব্দ</div>
+        </div>
+        <div class="philo-name">
+          <span class="pname-script ar">الله</span>
+          <div class="pname-lang">Arabic</div>
+          <div class="pname-meaning">সেই একজন</div>
+        </div>
+        <div class="philo-name">
+          <span class="pname-script bn">ঈশ্বর</span>
+          <div class="pname-lang">Bengali</div>
+          <div class="pname-meaning">পরম সত্তা</div>
+        </div>
+        <div class="philo-name">
+          <span class="pname-script" style="font-family:'Noto Serif Bengali',serif;font-size:22px;">ཆོས</span>
+          <div class="pname-lang">Tibetan</div>
+          <div class="pname-meaning">ধর্ম · সত্য</div>
+        </div>
+        <div class="philo-name">
+          <span class="pname-script" style="font-family:'Cinzel',serif;font-size:20px;">Deus</span>
+          <div class="pname-lang">Latin</div>
+          <div class="pname-meaning">ঐশ্বরিক</div>
+        </div>
+        <div class="philo-name">
+          <span class="pname-script bn">মানুষ</span>
+          <div class="pname-lang">Baul · বাউল</div>
+          <div class="pname-meaning">মানবতাই ধর্ম</div>
+        </div>
+      </div>
+
+      <div class="philo-quote-block reveal">
+        <div class="philo-quote-text">
+          যে নামেই ডাকো না কেন — সে শোনে।<br>
+          যে ভাষায়ই কাঁদো না কেন — সে বোঝে।<br>
+          যে পথেই হাঁটো না কেন — সে পাশে আছে।<br><br>
+          হৃদয় থেকে আকাশে · আকাশ থেকে বুকে<br>
+          অনেক নাম · এক শ্বাস · এক তীর।
+        </div>
+        <div class="philo-quote-attr">এক শ্বাস · Ek Swas · One Breath</div>
+      </div>
+
+      <div class="philo-quote-block reveal" style="margin-top:20px;border-color:rgba(201,164,74,0.08);">
+        <div class="philo-quote-text" style="font-family:'Noto Serif Bengali',serif;font-size:15px;">
+          রবীন্দ্রনাথ বলেছিলেন: "আমার মুক্তি আলোয় আলোয়।" <br>
+          নজরুল বলেছিলেন: "গাহি সাম্যের গান।" <br>
+          রুমি বলেছিলেন সব নদী সমুদ্রে মেলে।<br>
+          বুদ্ধ বলেছিলেন: সকল প্রাণী সুখী হোক।
+        </div>
+        <div class="philo-quote-attr">একই সত্যের চার মুখ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ⑤ MEDITATION GUIDE ════════════════ -->
+<section id="meditation">
+  <div class="section-inner">
+    <span class="section-tag reveal">অনুশীলন পদ্ধতি</span>
+    <h2 class="section-heading reveal reveal-delay-1">ধ্যান অনুশীলন গাইড</h2>
+    <p class="section-subheading reveal reveal-delay-2">মন্ত্র জপের ধাপে ধাপে পদ্ধতি — Mantra Japa · Step by Step</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="meditation-layout">
+      <div class="meditation-sidebar reveal">
+        <div class="meditation-symbol">ॐ</div>
+        <div class="bcard-body" style="font-size:13px;line-height:2;">
+          মন্ত্র জপ শুধু শব্দ উচ্চারণ নয় — এটি শ্বাস, মন এবং চেতনার একটি সম্পূর্ণ অনুশীলন। প্রতিটি শব্দে একটি কম্পন, প্রতিটি কম্পনে একটি রূপান্তর।
+        </div>
+        <div class="breath-timer">
+          <div class="breath-ring"></div>
+          <div class="breath-label">শ্বাসের ছন্দ<br><span style="font-size:10px;opacity:.6;">৮ সেকেন্ড চক্র</span></div>
+        </div>
+        <div style="margin-top:24px;padding:20px;border:1px solid var(--line);">
+          <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.4em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:12px;">আজকের মন্ত্র</div>
+          <div id="daily-mantra" style="font-family:'Noto Serif Devanagari',serif;font-size:18px;color:var(--gold);text-align:center;padding:8px 0;"></div>
+        </div>
+      </div>
+
+      <ol class="steps-list">
+        <li class="step-item reveal">
+          <span class="step-num">০১</span>
+          <div>
+            <div class="step-title">স্থান ও সময় নির্বাচন</div>
+            <div class="step-body">ভোরবেলা সূর্যোদয়ের আগে বা সন্ধ্যার পরে ধ্যানের সেরা সময়। একটি শান্ত জায়গা বেছে নাও — যেখানে কোনো বাধা নেই। পূর্ব বা উত্তর দিকে মুখ করে বসো।</div>
+          </div>
+        </li>
+        <li class="step-item reveal reveal-delay-1">
+          <span class="step-num">০২</span>
+          <div>
+            <div class="step-title">দেহ ও মনকে প্রস্তুত করা</div>
+            <div class="step-body">সোজা হয়ে বসো — পদ্মাসনে বা সুখাসনে। চোখ আলতো বন্ধ করো। তিনটি গভীর শ্বাস নাও। প্রতিটি শ্বাস ছাড়ার সাথে সব চিন্তা ছেড়ে দাও।</div>
+          </div>
+        </li>
+        <li class="step-item reveal reveal-delay-2">
+          <span class="step-num">০৩</span>
+          <div>
+            <div class="step-title">ওঙ্কার দিয়ে শুরু</div>
+            <div class="step-body">প্রথমে তিনটি দীর্ঘ ওঙ্কার উচ্চারণ করো। গভীর, ধীর, পেট থেকে উঠে আসা সেই শব্দ — সারা শরীরে কম্পন অনুভব করো।</div>
+            <div class="step-mantra">ॐ ......... ॐ ......... ॐ</div>
+          </div>
+        </li>
+        <li class="step-item reveal">
+          <span class="step-num">০৪</span>
+          <div>
+            <div class="step-title">মূল মন্ত্র — শান্তিপাঠ</div>
+            <div class="step-body">ধীরে ধীরে শান্তিপাঠ জপ করো। প্রতিটি শব্দের অর্থ অনুভব করো। সকল জীবের সুখ কামনার এই মন্ত্রে হৃদয় প্রসারিত হয়।</div>
+            <div class="step-mantra">लोकाः समस्ताः सुखिनो भवन्तु</div>
+          </div>
+        </li>
+        <li class="step-item reveal reveal-delay-1">
+          <span class="step-num">০৫</span>
+          <div>
+            <div class="step-title">তিব্বতি মন্ত্র — করুণা জাগরণ</div>
+            <div class="step-body">এখন ধীরে ধীরে তিব্বতি বীজমন্ত্র জপ করো। প্রতিটি অক্ষরে একটি গুণের স্পর্শ — ওঁ শরীর, মা বাক্য, ণি মন, পদ্ম নৈতিকতা, মে জ্ঞান, হুঁ সমন্বয়।</div>
+            <div class="step-mantra" style="font-size:16px;letter-spacing:.1em;">ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྃ</div>
+          </div>
+        </li>
+        <li class="step-item reveal reveal-delay-2">
+          <span class="step-num">০৬</span>
+          <div>
+            <div class="step-title">সুফি জিকির — হৃদয়ের ডাক</div>
+            <div class="step-body">এবার সুফি জিকিরের শ্বাসচক্র। শ্বাস নেওয়ার সময় "আল্লাহ" বলো মনে মনে, শ্বাস ছাড়ার সময় "হু"। প্রতিটি শ্বাসে ঐশ্বরিক উপস্থিতির অনুভব।</div>
+            <div class="step-mantra ar">السلام السلام · يا قلبي · النور</div>
+          </div>
+        </li>
+        <li class="step-item reveal">
+          <span class="step-num">০৭</span>
+          <div>
+            <div class="step-title">নিরবতায় বিশ্রাম</div>
+            <div class="step-body">সমস্ত মন্ত্র শেষ হলে কয়েক মিনিট নিরবে বসে থাকো। কোনো চিন্তা নেই, কোনো মন্ত্র নেই — শুধু উপস্থিতি। এই নিরবতাই আসল ধ্যান।</div>
+          </div>
+        </li>
+        <li class="step-item reveal reveal-delay-1">
+          <span class="step-num">০৮</span>
+          <div>
+            <div class="step-title">কৃতজ্ঞতায় সমাপ্তি</div>
+            <div class="step-body">ধীরে চোখ খোলো। হাত জোড় করো। এই মুহূর্তের জন্য, এই জীবনের জন্য, সকল সত্তার জন্য কৃতজ্ঞতা অনুভব করো।</div>
+            <div class="step-mantra">ॐ शान्तिः शान्तिः शान्तिः</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ⑥ AUDIO COMPOSITION GUIDE ═════════ -->
+<section id="audio-guide">
+  <div class="section-inner">
+    <span class="section-tag reveal">সুরের স্তর-বিন্যাস</span>
+    <h2 class="section-heading reveal reveal-delay-1">কম্পোজিশন গাইড</h2>
+    <p class="section-subheading reveal reveal-delay-2">ছয়টি পর্বে একটি সম্পূর্ণ ধ্যানমগ্ন যাত্রা</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="composition-layout reveal">
+      <div class="comp-stage-tabs">
+        <button class="comp-tab active" onclick="showStage(0)">I. একল</button>
+        <button class="comp-tab" onclick="showStage(1)">II. ফিস</button>
+        <button class="comp-tab" onclick="showStage(2)">III. পুরুষ</button>
+        <button class="comp-tab" onclick="showStage(3)">IV. মিশ্র</button>
+        <button class="comp-tab" onclick="showStage(4)">V. শিখর</button>
+        <button class="comp-tab" onclick="showStage(5)">VI. বিশ্রাম</button>
+      </div>
+
+      <div id="stage-0" class="comp-stage-detail active">
+        <div class="comp-stage-name">প্রথম পর্ব · একল স্বর</div>
+        <div class="comp-stage-eng">Single Tone · The Void Begins to Hum</div>
+        <div class="comp-stage-desc">গভীর শূন্যতা থেকে একটি মাত্র স্বর জেগে ওঠে। ৬০ হার্জের গভীর ড্রোন — পৃথিবীর কম্পন। কোনো সুর নেই, শুধু অস্তিত্বের হুঙ্কার।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Deep Drone</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:20%"></div></div><div class="layer-desc">৬০ হার্জ মূলস্বর</div></div>
+          <div class="comp-layer"><div class="layer-name">Sub Bass</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:15%"></div></div><div class="layer-desc">৩০ হার্জ ভিত্তি</div></div>
+          <div class="comp-layer"><div class="layer-name">Whisper</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:0%"></div></div><div class="layer-desc">নীরব</div></div>
+          <div class="comp-layer"><div class="layer-name">Choir</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:0%"></div></div><div class="layer-desc">নীরব</div></div>
+        </div>
+      </div>
+
+      <div id="stage-1" class="comp-stage-detail">
+        <div class="comp-stage-name">দ্বিতীয় পর্ব · ফিসফিসানো মন্ত্র</div>
+        <div class="comp-stage-eng">Whispered Mantras · Breath Cycles Begin</div>
+        <div class="comp-stage-desc">মন্ত্রের ফিসফিসানি শুরু হয়। ॐ শান্তিঃ · sabr sabr · السلام — বাতাসের মতো ঘুরতে থাকে। ঘণ্টার আওয়াজ দূর থেকে ভেসে আসে।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Drone</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:45%"></div></div><div class="layer-desc">গভীরতর হচ্ছে</div></div>
+          <div class="comp-layer"><div class="layer-name">Whisper</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:70%"></div></div><div class="layer-desc">মন্ত্র-ফিসফিস</div></div>
+          <div class="comp-layer"><div class="layer-name">Temple Bells</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:10%"></div></div><div class="layer-desc">দূরে বাজছে</div></div>
+          <div class="comp-layer"><div class="layer-name">Wind Texture</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:50%"></div></div><div class="layer-desc">বাতাসের সুর</div></div>
+        </div>
+      </div>
+
+      <div id="stage-2" class="comp-stage-detail">
+        <div class="comp-stage-name">তৃতীয় পর্ব · পুরুষ গায়ক দল</div>
+        <div class="comp-stage-eng">Male Choir Leads · Deep Resonance</div>
+        <div class="comp-stage-desc">পুরুষ কণ্ঠের গভীর অনুরণন শুরু হয়। তিব্বতি ভিক্ষুদের মতো নিম্নস্বরে — লোকাঃ সমস্তাঃ — বারবার উচ্চারিত হতে থাকে। তবলা-মাদলের ছন্দ যোগ হয়।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Male Choir</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:70%"></div></div><div class="layer-desc">প্রধান কণ্ঠ</div></div>
+          <div class="comp-layer"><div class="layer-name">Percussion</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:30%"></div></div><div class="layer-desc">দূরের তাল</div></div>
+          <div class="comp-layer"><div class="layer-name">Bowed Strings</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:35%"></div></div><div class="layer-desc">সুর আরম্ভ</div></div>
+          <div class="comp-layer"><div class="layer-name">Drone</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:65%"></div></div><div class="layer-desc">ভিত্তি শক্তিশালী</div></div>
+        </div>
+      </div>
+
+      <div id="stage-3" class="comp-stage-detail">
+        <div class="comp-stage-name">চতুর্থ পর্ব · মিশ্র গায়ক দল</div>
+        <div class="comp-stage-eng">Mixed Ensemble · Voices Unite</div>
+        <div class="comp-stage-desc">নারী কণ্ঠ যোগ হয়। উচ্চস্বরের সুর পুরুষের গভীরতার সাথে মিলে অপূর্ব সামঞ্জস্য তৈরি করে। সব স্তর একসাথে বাজতে থাকে।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Male Choir</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:80%"></div></div><div class="layer-desc">গভীর ভিত্তি</div></div>
+          <div class="comp-layer"><div class="layer-name">Female Voices</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:65%"></div></div><div class="layer-desc">উচ্চস্বর যোগ</div></div>
+          <div class="comp-layer"><div class="layer-name">Frame Drums</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:55%"></div></div><div class="layer-desc">তাল বাড়ছে</div></div>
+          <div class="comp-layer"><div class="layer-name">Temple Bells</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:60%"></div></div><div class="layer-desc">স্পষ্ট হচ্ছে</div></div>
+          <div class="comp-layer"><div class="layer-name">Overtones</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:40%"></div></div><div class="layer-desc">হারমোনিক্স</div></div>
+        </div>
+      </div>
+
+      <div id="stage-4" class="comp-stage-detail">
+        <div class="comp-stage-name">পঞ্চম পর্ব · সমাপনী শিখর</div>
+        <div class="comp-stage-eng">Resonant Climax · All Voices · One Sound</div>
+        <div class="comp-stage-desc">সকল স্তর পূর্ণ মাত্রায় উঠে আসে। সব মন্ত্র, সব ভাষা, সব সুর এক মহাশব্দে মিলিত হয়। হৃদয় থেকে আকাশ — আকাশ থেকে বুকে।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Full Choir</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:100%"></div></div><div class="layer-desc">সম্পূর্ণ শক্তি</div></div>
+          <div class="comp-layer"><div class="layer-name">All Percussion</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:90%"></div></div><div class="layer-desc">সম্পূর্ণ তাল</div></div>
+          <div class="comp-layer"><div class="layer-name">Strings Full</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:95%"></div></div><div class="layer-desc">পূর্ণ প্রস্ফুটন</div></div>
+          <div class="comp-layer"><div class="layer-name">Overtones</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:80%"></div></div><div class="layer-desc">পূর্ণ হারমোনি</div></div>
+          <div class="comp-layer"><div class="layer-name">All Bells</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:95%"></div></div><div class="layer-desc">পূর্ণ ধ্বনি</div></div>
+        </div>
+      </div>
+
+      <div id="stage-5" class="comp-stage-detail">
+        <div class="comp-stage-name">ষষ্ঠ পর্ব · নীরবতায় প্রত্যাবর্তন</div>
+        <div class="comp-stage-eng">Return to Silence · Final Sustained Chord</div>
+        <div class="comp-stage-desc">ধীরে ধীরে সব স্তর মিলিয়ে যায়। শেষে একটি দীর্ঘস্থায়ী কর্ড — তারপর শুধু বাতাসের শব্দ। শান্তিঃ শান্তিঃ শান্তিঃ।</div>
+        <div class="comp-layers">
+          <div class="comp-layer"><div class="layer-name">Final Chord</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:25%"></div></div><div class="layer-desc">বিলীয়মান</div></div>
+          <div class="comp-layer"><div class="layer-name">Wind Breath</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:35%"></div></div><div class="layer-desc">চিরন্তন বাতাস</div></div>
+          <div class="comp-layer"><div class="layer-name">Silence</div><div class="layer-bar-bg"><div class="layer-bar-fill" style="width:90%"></div></div><div class="layer-desc">শান্তিঃ</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ⑦ VISUAL GALLERY ══════════════════ -->
+<section id="gallery">
+  <div class="section-inner">
+    <span class="section-tag reveal">দৃশ্যশিল্প</span>
+    <h2 class="section-heading reveal reveal-delay-1">লিপিশিল্প · ক্যালিগ্রাফি · মন্ডল</h2>
+    <p class="section-subheading reveal reveal-delay-2">পবিত্র জ্যামিতি ও লিপির মধ্যে ঈশ্বরের সন্ধান</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="gallery-grid reveal">
+      <!-- Cell 1: Large mandala -->
+      <div class="gallery-cell">
+        <div class="gallery-art">
+          <svg class="mandala-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <g transform="translate(150,150)" fill="none" stroke="rgba(201,164,74,0.6)" stroke-width="0.5">
+              <circle r="140" stroke-width="0.3" opacity=".4"/>
+              <circle r="120" stroke-width="0.3" opacity=".3"/>
+              <circle r="100"/><circle r="80"/><circle r="60"/><circle r="40"/><circle r="20"/>
+              <g id="petal">
+                <ellipse rx="15" ry="50" transform="translate(0,-85)"/>
+                <ellipse rx="8" ry="30" transform="translate(0,-85)"/>
+              </g>
+              <use href="#petal" transform="rotate(45)"/>
+              <use href="#petal" transform="rotate(90)"/>
+              <use href="#petal" transform="rotate(135)"/>
+              <use href="#petal" transform="rotate(180)"/>
+              <use href="#petal" transform="rotate(225)"/>
+              <use href="#petal" transform="rotate(270)"/>
+              <use href="#petal" transform="rotate(315)"/>
+              <g stroke-width="0.3">
+                <line x1="-140" y1="0" x2="140" y2="0"/>
+                <line x1="0" y1="-140" x2="0" y2="140"/>
+                <line x1="-100" y1="-100" x2="100" y2="100"/>
+                <line x1="100" y1="-100" x2="-100" y2="100"/>
+              </g>
+              <g fill="rgba(201,164,74,0.8)" stroke="none">
+                <text font-family="'Noto Serif Devanagari',serif" font-size="22" text-anchor="middle" dominant-baseline="middle">ॐ</text>
+              </g>
+              <!-- decorative dots on circle -->
+              <g fill="rgba(201,164,74,0.5)" stroke="none">
+                <circle cx="0" cy="-100" r="2"/>
+                <circle cx="70.7" cy="-70.7" r="2"/>
+                <circle cx="100" cy="0" r="2"/>
+                <circle cx="70.7" cy="70.7" r="2"/>
+                <circle cx="0" cy="100" r="2"/>
+                <circle cx="-70.7" cy="70.7" r="2"/>
+                <circle cx="-100" cy="0" r="2"/>
+                <circle cx="-70.7" cy="-70.7" r="2"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">অষ্টদল মন্ডল<span>Ashtadala Mandala · Sacred Geometry</span></div>
+        </div>
+      </div>
+
+      <!-- Cell 2: Arabic calligraphy -->
+      <div class="gallery-cell">
+        <div class="gallery-art" style="flex-direction:column;gap:8px;">
+          <svg width="200" height="180" viewBox="0 0 200 180" style="opacity:.6;transition:opacity .4s">
+            <text x="100" y="70" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="48" fill="rgba(201,164,74,0.9)" text-anchor="middle">السلام</text>
+            <text x="100" y="110" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="28" fill="rgba(201,164,74,0.5)" text-anchor="middle">النور · الكريم</text>
+            <line x1="40" y1="125" x2="160" y2="125" stroke="rgba(201,164,74,0.2)" stroke-width="0.5"/>
+            <text x="100" y="150" font-family="'Cinzel',serif" font-size="8" fill="rgba(201,164,74,0.3)" text-anchor="middle" letter-spacing="4">AS-SALAM · AN-NUR</text>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">আরবি ক্যালিগ্রাফি<span>Arabic Calligraphy · Sufi Art</span></div>
+        </div>
+      </div>
+
+      <!-- Cell 3: Devanagari -->
+      <div class="gallery-cell">
+        <div class="gallery-art">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="opacity:.6;transition:opacity .4s">
+            <text x="100" y="90" font-family="'Noto Serif Devanagari',serif" font-size="60" fill="rgba(201,164,74,0.9)" text-anchor="middle">ॐ</text>
+            <text x="100" y="125" font-family="'Noto Serif Devanagari',serif" font-size="14" fill="rgba(201,164,74,0.45)" text-anchor="middle">शान्तिः शान्तिः</text>
+            <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(201,164,74,0.1)" stroke-width="0.5"/>
+            <circle cx="100" cy="100" r="70" fill="none" stroke="rgba(201,164,74,0.07)" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">ওঙ্কার লিপিশিল্প<span>Devanagari · OM Calligraphy</span></div>
+        </div>
+      </div>
+
+      <!-- Cell 4: Tibetan -->
+      <div class="gallery-cell">
+        <div class="gallery-art">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="opacity:.6;transition:opacity .4s">
+            <text x="100" y="90" font-family="'Noto Serif Bengali',serif" font-size="28" fill="rgba(201,164,74,0.8)" text-anchor="middle">ཨོཾ་མ་ཎི</text>
+            <text x="100" y="125" font-family="'Noto Serif Bengali',serif" font-size="28" fill="rgba(201,164,74,0.6)" text-anchor="middle">པདྨེ་ཧཱུྃ</text>
+            <rect x="20" y="45" width="160" height="100" fill="none" stroke="rgba(201,164,74,0.12)" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">তিব্বতি মন্ত্র<span>Tibetan Script · Six Syllables</span></div>
+        </div>
+      </div>
+
+      <!-- Cell 5: Star of unity -->
+      <div class="gallery-cell">
+        <div class="gallery-art">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="opacity:.55;transition:opacity .4s">
+            <g transform="translate(100,100)" fill="none" stroke="rgba(201,164,74,0.5)" stroke-width="0.5">
+              <polygon points="0,-80 22,-30 75,-25 35,15 45,70 0,40 -45,70 -35,15 -75,-25 -22,-30"/>
+              <circle r="35"/>
+              <text font-family="'Noto Serif Bengali',serif" font-size="13" fill="rgba(201,164,74,0.7)" text-anchor="middle" dominant-baseline="middle" stroke="none">একতা</text>
+            </g>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">একতার প্রতীক<span>Unity Symbol · All Faiths</span></div>
+        </div>
+      </div>
+
+      <!-- Cell 6: Bengali script -->
+      <div class="gallery-cell">
+        <div class="gallery-art">
+          <svg width="200" height="200" viewBox="0 0 200 200" style="opacity:.6;transition:opacity .4s">
+            <text x="100" y="75" font-family="'Noto Serif Bengali',serif" font-size="32" fill="rgba(201,164,74,0.8)" text-anchor="middle">এক শ্বাস</text>
+            <text x="100" y="115" font-family="'Noto Serif Bengali',serif" font-size="18" fill="rgba(201,164,74,0.45)" text-anchor="middle">অনেক নাম</text>
+            <text x="100" y="148" font-family="'Cormorant Garamond',serif" font-style="italic" font-size="13" fill="rgba(201,164,74,0.3)" text-anchor="middle" letter-spacing="2">one breath</text>
+          </svg>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-label">বাংলা ক্যালিগ্রাফি<span>Bengali Script · One Breath</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ⑧ LATIN TRADITION ═════════════════ -->
+<section id="latin-tradition">
+  <div class="section-inner">
+    <span class="section-tag reveal">পশ্চিমা আধ্যাত্মিক ঐতিহ্য</span>
+    <h2 class="section-heading reveal reveal-delay-1">লাতিন · পাশ্চাত্য ঐতিহ্য</h2>
+    <p class="section-subheading reveal reveal-delay-2">Latin · Western Mystical Tradition · Greg­orian Chant</p>
+    <div class="gold-divider reveal reveal-delay-2"></div>
+
+    <div class="latin-layout">
+      <div class="latin-left reveal">
+        <div class="big-latin">Pax<br>Lux<br>Amor</div>
+        <div class="bcard-body">
+          লাতিন ভাষায় মধ্যযুগীয় খ্রিস্টান সন্ন্যাসীরা গ্রেগোরিয়ান চ্যান্ট গাইতেন — সেই একই ধীর, ধ্যানমগ্ন সুর যা পূর্বের মন্ত্রের সাথে মিলে যায়। ভিন্ন ভাষা, একই আত্মা।
+        </div>
+        <div class="latin-phrases">
+          <div class="latin-phrase">
+            <span class="lp-text">Pax et Lux</span>
+            <span class="lp-meaning">শান্তি ও আলো</span>
+          </div>
+          <div class="latin-phrase">
+            <span class="lp-text">Amor vincit omnia</span>
+            <span class="lp-meaning">প্রেম সবকিছু জয় করে</span>
+          </div>
+          <div class="latin-phrase">
+            <span class="lp-text">Lux in tenebris</span>
+            <span class="lp-meaning">অন্ধকারে আলো</span>
+          </div>
+          <div class="latin-phrase">
+            <span class="lp-text">Spiritus mundi</span>
+            <span class="lp-meaning">বিশ্বের আত্মা</span>
+          </div>
+          <div class="latin-phrase">
+            <span class="lp-text">In principio erat Verbum</span>
+            <span class="lp-meaning">আদিতে ছিল শব্দ · ওঙ্কারের মতো</span>
+          </div>
+          <div class="latin-phrase">
+            <span class="lp-text">Ora et Labora</span>
+            <span class="lp-meaning">প্রার্থনা করো ও কাজ করো</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="latin-right-quote">
+          <div class="lrq-text">
+            "In principio erat Verbum" —<br>
+            আদিতে ছিল শব্দ।<br><br>
+            সংস্কৃতে: ॐ — আদিম শব্দ।<br>
+            আরবিতে: "কুন" — হও।<br>
+            বাংলায়: ওঁ — সেই একই শব্দ।<br><br>
+            <em style="color:rgba(201,164,74,.5);font-size:.85em;">সব পথের শুরু শব্দে।<br>সব শেষও নীরবতায়।</em>
+          </div>
+          <div class="lrq-source">Gospel of John · যোহন ১:১ · In Principio</div>
+        </div>
+
+        <div style="margin-top:24px;padding:32px;border:1px solid var(--line);background:rgba(201,164,74,0.02);">
+          <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.4em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:16px;">গ্রেগোরিয়ান চ্যান্ট ও মন্ত্রের মিল</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="padding:12px;border:1px solid var(--line);">
+              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:8px;">Gregorian</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,228,204,.5);">Kyrie Eleison<br><span style="font-size:11px;color:rgba(201,164,74,.3);">হে প্রভু, দয়া করো</span></div>
+            </div>
+            <div style="padding:12px;border:1px solid var(--line);">
+              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:8px;">Sanskrit</div>
+              <div style="font-family:'Noto Serif Devanagari',serif;font-size:13px;color:rgba(240,228,204,.5);">कृपा करो<br><span style="font-family:'Noto Serif Bengali',serif;font-size:11px;color:rgba(201,164,74,.3);">কৃপা করো</span></div>
+            </div>
+            <div style="padding:12px;border:1px solid var(--line);">
+              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:8px;">Sufi</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;direction:rtl;font-size:16px;color:rgba(240,228,204,.5);">يا رحيم<br><span style="font-size:11px;color:rgba(201,164,74,.3);font-style:normal;direction:ltr;">হে রহিম — পরম দয়ালু</span></div>
+            </div>
+            <div style="padding:12px;border:1px solid var(--line);">
+              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.3em;color:rgba(201,164,74,.3);text-transform:uppercase;margin-bottom:8px;">Bengali</div>
+              <div style="font-family:'Noto Serif Bengali',serif;font-size:13px;color:rgba(240,228,204,.5);">দয়া করো<br><span style="font-size:11px;color:rgba(201,164,74,.3);">সবার মঙ্গল হোক</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════ -->
+<footer>
+  <div class="footer-om">ॐ</div>
+  <div class="footer-text">শান্তিঃ শান্তিঃ শান্তিঃ · السلام · ཤི་བ · Pax · শান্তি</div>
+  <div class="footer-scripts" style="margin-top:20px;">
+    ॐ शान्तिः शान्तिः शान्तिः · لوكاः समस्ताः सुखिनो भवन्तु · ཨོཾ་མ་ཎི་པདྨེ་ཧཱུྃ · السلام السلام · এক শ্বাস
+  </div>
+  <div class="footer-scripts" style="margin-top:8px;font-family:'Cormorant Garamond',serif;font-style:italic;">
+    heart to sky · sky to chest · many names · one breath · one shore
+  </div>
+</footer>
+
+<script>
+// ─── Custom cursor ─────────────────────────
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+  setTimeout(()=>{ trail.style.left=mx+'px'; trail.style.top=my+'px'; },80);
+});
+document.querySelectorAll('a,button,.tradition-card,.bengali-card,.gallery-cell,.comp-tab').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='24px'; cursor.style.height='24px'; cursor.style.background='rgba(201,164,74,0.15)'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='12px'; cursor.style.height='12px'; cursor.style.background='transparent'; });
+});
+
+// ─── Hero particle canvas ──────────────────
+const cv = document.getElementById('hero-canvas');
+const cx = cv.getContext('2d');
+let W,H;
+const resize = () => { W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; };
+resize(); window.addEventListener('resize',resize);
+
+const GLYPHS = ['ॐ','ཨོཾ','शान्','السلام','يا','النور','भव','ཧཱུྃ','الله','শান্তি','নূর'];
+const pts = Array.from({length:70},()=>mkPt());
+function mkPt(x,y){
+  return { x:x??Math.random()*1800, y:y??Math.random()*900,
+    vx:(Math.random()-.5)*.3, vy:-Math.random()*.25-.05,
+    a:Math.random()*.12+.02, sz:Math.random()*9+6,
+    g:GLYPHS[Math.floor(Math.random()*GLYPHS.length)],
+    life:Math.random(), ml:Math.random()*.005+.002 };
+}
+function drawHero(){
+  cx.clearRect(0,0,W,H);
+  for(const p of pts){
+    p.life+=p.ml;
+    const t=Math.sin(p.life*Math.PI);
+    cx.globalAlpha=t*p.a;
+    cx.font=`${p.sz}px 'Noto Serif Devanagari',serif`;
+    cx.fillStyle='rgba(201,164,74,1)';
+    cx.fillText(p.g,p.x,p.y);
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.life>1||p.y<-20||p.x<-50||p.x>W+50) Object.assign(p,mkPt(Math.random()*W,H+20),{life:0});
+  }
+  cx.globalAlpha=1;
+  requestAnimationFrame(drawHero);
+}
+drawHero();
+
+// ─── Scroll reveal ─────────────────────────
+const revealEls = document.querySelectorAll('.reveal, .step-item');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+},{threshold:0.15});
+revealEls.forEach(el=>observer.observe(el));
+
+// ─── Composition tabs ──────────────────────
+function showStage(i){
+  document.querySelectorAll('.comp-stage-detail').forEach((d,j)=>d.classList.toggle('active',j===i));
+  document.querySelectorAll('.comp-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+}
+
+// ─── Daily mantra rotation ─────────────────
+const mantras = ['ॐ शान्तिः','السلام','ཨོཾ་མ་ཎི','এক শ্বাস','लोकाः सुखिनो','يا قلبي','শান্তি'];
+let mi=0;
+const dm = document.getElementById('daily-mantra');
+function rotateMt(){ dm.style.opacity=0; setTimeout(()=>{ dm.textContent=mantras[mi++%mantras.length]; dm.style.opacity=1; },500); }
+dm.style.transition='opacity .5s'; rotateMt(); setInterval(rotateMt,4000);
+
+// ─── Smooth nav active ─────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{ if(window.scrollY>=s.offsetTop-200) cur=s.id; });
+  navLinks.forEach(a=>{ a.style.color = a.getAttribute('href')==='#'+cur ? 'rgba(201,164,74,0.8)' : ''; });
+});
+</script>
+</body>
+</html>
