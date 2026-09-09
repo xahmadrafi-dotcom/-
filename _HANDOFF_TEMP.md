@@ -1,6 +1,11 @@
 ---
+project: "M99"
+document: "Complete System Specification"
+version: "ঐ ০.০২"
+status: "Draft"
+updated: "2026-06-24"
+classification: "Internal"
 title: "বাঙালি ভাবের ময়নামতি — হ্যান্ডঅফ টেমপ্লেট"
-version: "v0.2-tontra"
 date: "2026-06-21"
 state: "প্রাথমিক"
 commit_oid: "3be579bdd167e8f0089563919c2b554f16aa8448"
