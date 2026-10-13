@@ -1,0 +1,136 @@
+schema:
+  title: "metadata-templates"
+  description: "M99 প্রকল্পের সকল নথির মেটাডেটা টেমপ্লেট কাঠামো"
+  version: "ঐ ০.০১"
+
+  front_matter_template:
+    fields:
+      project:
+        type: string
+        required: true
+        description: "Project identifier, always M99"
+        allowed_values: ["M99"]
+      document:
+        type: string
+        required: true
+        description: "Human-readable document name"
+      version:
+        type: string
+        required: true
+        pattern: "^ঐ [০-৯]+\\.[০-৯]+$"
+        description: "ঐ-versioning string"
+      status:
+        type: string
+        required: true
+        allowed_values: ["Draft", "Review", "Final"]
+      updated:
+        type: string
+        required: true
+        format: "YYYY-MM-DD"
+        description: "ISO 8601 date of last update"
+      classification:
+        type: string
+        required: true
+        allowed_values: ["Internal", "Public"]
+
+  node_metadata_template:
+    fields:
+      node_id:
+        type: string
+        required: true
+        format: "kebab-case"
+        description: "Unique identifier for the node"
+      name_bn:
+        type: string
+        required: true
+        description: "Bengali display name"
+      type:
+        type: string
+        required: true
+        description: "Node type category in English"
+      core:
+        type: string
+        required: true
+        description: "One-sentence Bengali core message"
+      formula:
+        type: string
+        required: false
+        description: "Transformation formula using Bengali arrow notation"
+      symbols:
+        type: array
+        required: false
+        items:
+          type: string
+
+  version_log_template:
+    fields:
+      date:
+        type: string
+        required: true
+        format: "YYYY-MM-DD"
+      version:
+        type: string
+        required: true
+        pattern: "^ঐ [০-৯]+\\.[০-৯]+$"
+      type:
+        type: string
+        required: true
+        allowed_values: ["যোগ", "সংশোধন", "পুনর্গঠন", "যোগ + সংশোধন"]
+      title_bn:
+        type: string
+        required: true
+      title_en:
+        type: string
+        required: false
+      items:
+        type: array
+        required: true
+        items:
+          type: string
+
+sample_instance:
+  front_matter:
+    project: "M99"
+    document: "Complete System Specification"
+    version: "ঐ ০.০২"
+    status: "Draft"
+    updated: "2026-06-24"
+    classification: "Internal"
+
+  node_metadata:
+    node_id: "dhumketu-satta"
+    name_bn: "ধূমকেতু-সত্তা"
+    type: "symbolic_identity"
+    core: "দহন থেকে রূপান্তর, রূপান্তর থেকে আলো"
+    formula: "দহন → রূপান্তর → আলো"
+    symbols:
+      - "ধূমকেতু"
+      - "আগুন"
+      - "আলো"
+
+  version_log:
+    date: "2026-06-24"
+    version: "ঐ ০.০২"
+    type: "পুনর্গঠন"
+    title_bn: "নথি পুনর্গঠন ও ঐ-ভার্সনিং বাস্তবায়ন"
+    title_en: "Docs restructure and ai-versioning"
+    items:
+      - "context-injection-spec তৈরি"
+      - "metadata-system-guide তৈরি"
+      - "ai-versioning-policy তৈরি"
+      - "_HANDOFF_TEMP.md front matter আপডেট"
+
+validation_hints:
+  - field: "version"
+    rule: "must use ঐ prefix followed by two-digit decimal"
+    example: "ঐ ০.০১"
+    invalid_example: "oi 0.01 or v0.01"
+  - field: "status"
+    rule: "only Draft, Review, or Final allowed"
+  - field: "updated"
+    rule: "ISO 8601 format YYYY-MM-DD required"
+  - field: "node_id"
+    rule: "must be lowercase kebab-case ASCII"
+    example: "nirob-na"
+  - field: "classification"
+    rule: "only Internal or Public allowed"
